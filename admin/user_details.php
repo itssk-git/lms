@@ -9,7 +9,18 @@ include '../includes/connection.php';
   <?php 
   if(isset($_SESSION['status'])){
   echo $_SESSION['status'];
-  unset($_SESSION['status']); }?>
+  unset($_SESSION['status']); }
+  
+  
+  if(isset($_SESSION['msg'])){
+  echo $_SESSION['msg'];
+  unset($_SESSION['msg']); }
+  
+  
+  
+  
+  ?>
+  
 </div>
 <?php
 $select_users = "SELECT * FROM members";
@@ -54,7 +65,7 @@ if ($result->num_rows > 0) {
         <a href='../user/registration.php?m_id=".$row['member_id']."' class='btn btn-success'>Edit</a>
       </td>";
       echo "<td>
-      <a href='delete_button.php?m_id=".$row['member_id']."' onclick=\"return confirm('Are you sure you want to delete this user?');\" class='btn btn-danger'>Delete</a>
+      <a href='../admin/delete_button.php?m_id=".$row['member_id']."' onclick=\"return confirm('Are you sure you want to delete this user?');\" class='btn btn-danger'>Delete</a>
   </td>";
   
         

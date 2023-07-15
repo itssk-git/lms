@@ -37,34 +37,37 @@ else{
     
 }
 
-if(isset($_POST['login'])){
+if (isset($_POST['login'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
     $sql = "SELECT * FROM members WHERE username = '$username' AND password = '$password'";
     $result = $conn->query($sql);
 
-
     if ($result->num_rows > 0) {
-        $result=$result->fetch_assoc();
-        
+        $result = $result->fetch_assoc();
 
         session_start();
-        $_SESSION['username']=$result['username'];
-       
-        $_SESSION['name']= $result['name'];
-        $_SESSION['user_type']=$result['type'];
-        
-       
+        $_SESSION['username'] = $result['username'];
+        $_SESSION['name'] = $result['name'];
+        $_SESSION['user_type'] = $result['type'];
+
         header('Location: ../admin/dashboard.php');
         exit();
     } else {
-        // Login failed
-        echo "Invalid username or password";
+        // Redirect to login page with error message
+        header('Location: ../user/login.php?error=Invalid credentials');
+        exit();
     }
-    
-    // Close the database connection
-    $conn->close();    
+
+    $conn->close();
 }
+
+
+
+
+
+
+
 
 
 

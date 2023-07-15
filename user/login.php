@@ -10,6 +10,16 @@ if(isset($_SESSION['username'])){
 
 ?>
 
+<?php
+
+if (isset($_GET['error'])) {
+    $errorMessage = $_GET['error'];
+} else {
+    $errorMessage = ''; 
+}
+?>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -58,6 +68,7 @@ if(isset($_SESSION['username'])){
                 <label for="password">Password</label>
                 <input type="password" class="form-control" id="password" name="password" required>
             </div>
+            <p class="text-danger"><?php echo $errorMessage; ?></p>
             <button type="submit" name="login" class="btn btn-primary">Login</button><br><br>
             <button class="btn btn-success" ><a href="registration.php" style="color:white">Create an account</a></button>
             <span>Dont have an account?</span>

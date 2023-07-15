@@ -9,7 +9,16 @@ include '../includes/connection.php';
   if(isset($_SESSION['status'])){
   echo $_SESSION['status'];
   unset($_SESSION['status']); }
-  ?>
+
+
+
+  if(isset($_SESSION['msg'])){
+    echo $_SESSION['msg'];
+    unset($_SESSION['msg']); }
+    ?>
+  
+
+
 
 
 
