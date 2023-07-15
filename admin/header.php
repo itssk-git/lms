@@ -46,7 +46,7 @@
 </head>
 <body >
   <div class="dashboard-header">
-    <a class="navbar-brand" href="#">Admin Dashboard</a>
+    <a class="navbar-brand" href="dashboard.php">Admin Dashboard</a>
     <div class="welcome-message">
       <?php
         session_start();

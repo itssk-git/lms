@@ -4,6 +4,13 @@ include '../includes/connection.php';
 ?>
 <?php include_once 'header.php'; ?>
 
+
+<div class="alert alert-success" role="alert">
+  <?php 
+  if(isset($_SESSION['status'])){
+  echo $_SESSION['status'];
+  unset($_SESSION['status']); }?>
+</div>
 <?php
 $select_users = "SELECT * FROM members";
 
@@ -13,6 +20,7 @@ if($result){
 
 
 if ($result->num_rows > 0) {
+
     
     echo "<table class='table table-striped'>";
     echo "<tr>

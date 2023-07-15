@@ -59,8 +59,11 @@ if (isset($_GET['m_id'])) {
         <h2>Registration Form</h2>
         <form action="../includes/all_action.php" method="POST">
             <div class="form-group">
+               
                 <label for="username">Username</label>
-                <input type="text" class="form-control" id="username" value="<?php echo isset($username) ? $username : ''; ?>" name="username" required>
+                <input type="text" class="form-control" onInput="checkUsername()" id="username" value="<?php echo isset($username) ? $username : ''; ?>" name="username" required>
+                
+                <span id="username_error"></span>
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
@@ -89,11 +92,11 @@ if (isset($_GET['m_id'])) {
             </div>
             <?php
             if(isset($userId)){
-                echo '<button type="submit" name="update" class="btn btn-primary">' . $buttonLabel . '</button>';
+                echo '<button type="submit" id="submit" name="update_user" class="btn btn-primary">' . $buttonLabel . '</button>';
             }
 
             else{
-                echo '<button type="submit" name="register" class="btn btn-primary"> Register </button>';
+                echo '<button type="submit" id="submit" name="register" class="btn btn-primary"> Register </button>';
 
 
 
@@ -104,6 +107,33 @@ if (isset($_GET['m_id'])) {
     </div>
 </body>
 </html>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    $(document).ready(function() {
+  $('#username').on('blur', function() {
+    var username = $(this).val();
+
+    $.ajax({
+      url: '../validate/checkAvailability.php',
+      type: 'POST',
+      data: { user_name: username },
+      success: function(response) {
+        if (response === 'available') {
+          $('#username_error').html('<span class="text-success">Username available</span>');
+          $('#submit').prop('disabled', false);
+        } else {
+          $('#username_error').html('<span class="text-danger">Username not available</span>');
+          $('#submit').prop('disabled', true);
+        }
+      }
+    });
+  });
+});
+
+
+    
+</script>
 <?php
     include '../includes/footer.php';
 ?>
