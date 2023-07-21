@@ -4,29 +4,60 @@ include '../includes/connection.php';
 ?>
 <?php include_once 'header.php'; ?>
 
+<style>
+   
+    a[href="user_details.php"] {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #1e3050;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: background-color 0.2s ease-in-out;
+    }
 
-<div class="alert alert-success" role="alert">
+    a[href="user_details.php"]:hover {
+      background-color: #218838; 
+    }
+  </style>
+<div class="alert alert-success d-flex justify-content-between" role="alert">
+  <a href="user_details.php">All Users</a>
   <?php 
   if(isset($_SESSION['status'])){
-  echo $_SESSION['status'];
-  unset($_SESSION['status']); }
-  
-  
-  if(isset($_SESSION['msg'])){
-  echo $_SESSION['msg'];
-  unset($_SESSION['msg']); }
-  
-  
-  
-  
+    echo $_SESSION['status'];
+    unset($_SESSION['status']); }
+    
+    
+    if(isset($_SESSION['msg'])){
+    echo $_SESSION['msg'];
+    unset($_SESSION['msg']); }
   ?>
-  
+  <form class="d-flex" action="" method="GET">
+    <input type="text" name="search_user" id="" placeholder="Search Users">
+    <button class="btn btn-success" name="search_btn">Search</button>
+  </form>
 </div>
+
+
+
+
+  
+
 <?php
-$select_users = "SELECT * FROM members";
+
+if (isset($_GET['search_btn'])) {
+  $user = $_GET['search_user'];
+
+  $sql = "SELECT * FROM members WHERE `name` LIKE '%$user%'";
+  $result = $conn->query($sql);
+}
+else{
+  $select_users = "SELECT * FROM members";
 
 
-$result = $conn->query($select_users);
+  $result = $conn->query($select_users);
+}
+
 if($result){
 
 

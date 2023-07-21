@@ -34,6 +34,7 @@ if (isset($_GET['b_id'])) {
     $isbn = $row['ISBN'];
     $quantity = $row['quantity_available'];
     $category = $row['category'];
+    $photo=$row['photo'];
   
     
     $buttonLabel = 'Update';
@@ -44,7 +45,7 @@ if (isset($_GET['b_id'])) {
 ?>
 <div class="container">            
         <h2>Add Books</h2>
-        <form action="../includes/all_action.php" method="POST">
+        <form action="../includes/all_action.php" method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="title">Title</label>
                 <input type="text" class="form-control" id="title" name="title" value="<?php echo isset($title) ? $title : ''; ?>" required>
@@ -70,6 +71,10 @@ if (isset($_GET['b_id'])) {
                 <label for="quantity">Quantity</label>
                 <input type="text" class="form-control" id="quantity" name="quantity" value="<?php echo isset($quantity) ? $quantity : ''; ?>" required>
             </div>
+            <div class="form-group">
+    <label for="image">Image</label>
+    <input type="file" class="form-control" id="image" name="image" accept="image/*">
+</div>
             <?php
             if(isset($bookId)){
                 echo '<button type="submit" name="update_books" style="margin-top: 20px;" class="btn btn-primary">' . $buttonLabel . '</button>';

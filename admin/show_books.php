@@ -4,31 +4,55 @@ include '../includes/connection.php';
 <?php include_once 'header.php'; ?>
 
 
-<div class="alert alert-success" role="alert">
+<style>
+   
+    a[href="show_books.php"] {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #1e3050;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: background-color 0.2s ease-in-out;
+    }
+
+    a[href="show_books.php"]:hover {
+      background-color: #218838; 
+    }
+  </style>
+<div class="alert alert-success d-flex justify-content-between" role="alert">
+  <a href="show_books.php">All Books</a>
   <?php 
   if(isset($_SESSION['status'])){
-  echo $_SESSION['status'];
-  unset($_SESSION['status']); }
-
-
+    echo $_SESSION['status'];
+    unset($_SESSION['status']);
+  }
 
   if(isset($_SESSION['msg'])){
     echo $_SESSION['msg'];
-    unset($_SESSION['msg']); }
-    ?>
-  
-
-
-
-
-
+    unset($_SESSION['msg']);
+  }
+  ?>
+  <form class="d-flex" action="" method="GET">
+    <input type="text" name="search_book" id="" placeholder="Search Books">
+    <button class="btn btn-success" name="search_btn">Search</button>
+  </form>
 </div>
 
+
 <?php
+if (isset($_GET['search_btn'])) {
+  $book = $_GET['search_book'];
+
+  $sql = "SELECT * FROM books WHERE title LIKE '%$book%'";
+  $result = $conn->query($sql);
+}
+else{
 $select_books = "SELECT * FROM books";
 
 
 $result = $conn->query($select_books);
+}
 if($result){
 
 
@@ -79,6 +103,7 @@ if ($result->num_rows > 0) {
 
 
 ?>
+
 
 
 

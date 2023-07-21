@@ -54,7 +54,8 @@ if (isset($_POST['login'])) {
         header('Location: ../admin/dashboard.php');
         exit();
     } else {
-        // Redirect to login page with error message
+        
+
         header('Location: ../user/login.php?error=Invalid credentials');
         exit();
     }
@@ -71,37 +72,38 @@ if (isset($_POST['login'])) {
 
 
 
-if(isset($_POST['add_books'])){
+
+if (isset($_POST['add_books'])) {
     session_start();
-    $title=$_POST['title'];
-    $author=$_POST['author'];
-    $category=$_POST['category'];
-    $p_date=$_POST['p_date'];
-    $isbn=$_POST['isbn'];
-    $quantity=$_POST['quantity'];
-   
-    
 
-    
+    $title = $_POST['title'];
+    $author = $_POST['author'];
+    $category = $_POST['category'];
+    $p_date = $_POST['p_date'];
+    $isbn = $_POST['isbn'];
+    $quantity = $_POST['quantity'];
+    $photo = $_FILES['image']['tmp_name'];
+    $photoContent = file_get_contents($photo);
 
-    $sql = "INSERT INTO books 
-        VALUES ('','$title', '$author', '$p_date',   '$isbn', '$quantity','$category')";
+    // Add database connection and error handling here if not already included
 
-if($conn-> query($sql)){
-    $_SESSION['status']='Books Added Sucessfully';
-    header('Location:../admin/show_books.php');
+    // Use prepared statement to prevent SQL injection
+    $sql = "INSERT INTO books (title, author, publication_date, ISBN, quantity_available, category, photo) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sssssss", $title, $author, $p_date, $isbn, $quantity, $category, $photoContent);
 
+    if ($stmt->execute()) {
+        $_SESSION['status'] = 'Books Added Successfully';
+        header('Location:../admin/show_books.php');
+        exit();
+    } else {
+        $_SESSION['status'] = 'Adding Failed: ' . $conn->error;
+        header('Location:../admin/show_books.php');
+        exit();
+    }
 }
-else{
-    $_SESSION['status']='Adding Failed';
-    header('Location:../admin/show_books.php');
 
-}
-   
 
-      
-    
-}
 
 if(isset($_POST['update_user'])){
     session_start();
@@ -136,9 +138,9 @@ if(isset($_POST['update_user'])){
 }
 
 
-if(isset($_POST['update_books'])){
-    session_start();
 
+if (isset($_POST['update_books'])) {
+    session_start();
 
     $bookId = $_SESSION['b_id'];
     $title = $_POST['title'];
@@ -147,24 +149,31 @@ if(isset($_POST['update_books'])){
     $isbn = $_POST['isbn'];
     $quantity = $_POST['quantity'];
     $category = $_POST['category'];
+    $photo = $_FILES['image']['tmp_name'];
+    $photoContent = file_get_contents($photo);
 
     
-    
-
-    
-
-    $sql = "UPDATE books SET title = '$title', author = '$author', publication_date = '$pub_date', ISBN = '$isbn', quantity_available = '$quantity',category = '$category' WHERE book_id = $bookId ";
-    
-
-    if($conn-> query($sql)){
-        $_SESSION['status']='Books Updated Sucessfully';
-        header('Location:../admin/show_books.php');
-
+    if ($_FILES['image']['error'] === UPLOAD_ERR_NO_FILE) {
+        
+        $sql = "UPDATE books SET title=?, author=?, publication_date=?, ISBN=?, quantity_available=?, category=? WHERE book_id=?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssssssi", $title, $author, $pub_date, $isbn, $quantity, $category, $bookId);
+    } else {
+        
+        $sql = "UPDATE books SET title=?, author=?, publication_date=?, ISBN=?, quantity_available=?, category=?, photo=? WHERE book_id=?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sssssssi", $title, $author, $pub_date, $isbn, $quantity, $category, $photoContent, $bookId);
     }
-    else{
-        $_SESSION['status']='Updated Failed';
-        header('Location:../admin/show_books.php');
 
+    if ($stmt->execute()) {
+        $_SESSION['status'] = 'Books Updated Successfully';
+        header('Location:../admin/show_books.php');
+        exit();
+    } else {
+        $_SESSION['status'] = 'Update Failed: ' . $conn->error;
+        header('Location:../admin/show_books.php');
+        exit();
     }
 }
-?>
+
+

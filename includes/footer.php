@@ -9,7 +9,7 @@
         <div class="row">
             <div class="col-md-3">
                 <h5>About Us</h5>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse consectetur lorem non urna commodo, in consectetur neque interdum.</p>
+                <p>Welcome to Prime CA Library Management System! Our platform is designed to streamline and enhance the library experience at Prime CA. Our goal is to provide a seamless and efficient way to manage and access library resources for students, faculty, and staff.</p>
             </div>
             <div class="col-md-3">
                 
@@ -19,9 +19,9 @@
             </div>
             <div class="col-md-3">
                 <h5>Contact Us</h5>
-                <p>123 Library Street, City, Country</p>
-                <p>Email: info@library.com</p>
-                <p>Phone: +1 234 567 890</p>
+                <p>Lagankhel, Lalitpur, Nepal </p>
+                <p>Email: prime@library.com</p>
+                <p>Tel: 015455970, 015455972</p>
             </div>
            
         </div>

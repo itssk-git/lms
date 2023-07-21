@@ -55,10 +55,10 @@
                                 echo '<li class="nav-item">';
 
                                 if (isset($_SESSION['username'])) {
-                                    echo '<a class="nav-link" href="../user/logout.php">Logout</a>';
+                                    echo '<a class="nav-link" href="/lms/user/logout.php">Logout</a>';
                                     } 
                                     else {
-                                        echo '<a class="nav-link" href="../user/login.php">Login</a>';
+                                        echo '<a class="nav-link" href="/lms/user/login.php">Login</a>';
                                             }       
 
                                     echo '</li>';

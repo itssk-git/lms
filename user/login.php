@@ -5,7 +5,18 @@
 <?php
 
 if(isset($_SESSION['username'])){
-    header('location: ../includes/index.php');
+    if($_SESSION['user_type']=='admin'){
+        
+        header('location: /lms/admin/dashboard.php');
+        exit();
+
+
+    }
+    else{
+        header('location: /lms/index.php');
+
+
+    }
 }
 
 ?>
