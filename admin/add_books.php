@@ -214,7 +214,7 @@ if (isset($_GET['b_id'])) {
             <div id="imagePreview" style="display: none;"></div>
         <?php } ?>
     </div>
-    <input type="file" class="form-control" id="image" name="image" accept="image/*" onchange="updateImagePreview()">
+   
 </div>
 
 
