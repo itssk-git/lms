@@ -275,10 +275,15 @@ if (isset($_POST['add_books'])) {
         exit();
     } else {
         $insertBookQuery = "INSERT INTO books (title, author, category_id, publisher_id, ISBN, quantity_available, description, photo) 
-        VALUES ('$title', '$author', $category, $publisher, '$isbn', $quantity, '$description', ?)";
+                            VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         
         $stmt = $conn->prepare($insertBookQuery);
-        $stmt->bind_param("s", $photoContent);
+        
+        if (!$stmt) {
+            die("Prepare failed: " . $conn->error);
+        }
+
+        $stmt->bind_param("ssiiisbs", $title, $author, $category, $publisher, $isbn, $quantity, $description, $photoContent);
 
         if ($stmt->execute()) {
             $_SESSION['status'] = 'Book Added Successfully';
@@ -291,10 +296,10 @@ if (isset($_POST['add_books'])) {
         }
 
         $stmt->close();
-        $conn->close();    
+        $conn->close();
     }
-
 }
+
 
 
 
